@@ -5,7 +5,7 @@ var mymap = L.map('map',
 		minZoom: 10,
     maxZoom: 18,
 	//maxBounds: [[41.15, 13], [42.5, 15]],
-}).setView([41.598252,14.236169], 14);
+}).setView([41.594574,14.231342], 16);
 
 // custom zoom control
 L.control.zoom({
@@ -20,7 +20,7 @@ mymap.addControl(new L.Control.Fullscreen({
 }));
 
 // custom attribution
-mymap.attributionControl.addAttribution('powered by<a href="http://www.naturagis.it" target="_blank"> <img src ="https://www.naturagis.it/wp-content/uploads/2021/10/NG-minimini.png" width = "15px"> naturagis</a>');
+mymap.attributionControl.addAttribution('Realizzato da <a style="color:#0096FF;" href="https://www.linkedin.com/in/ludovicofrate/" target="_blank"> Ludovico Frate</a>');
 
 // loading some basemaps
 //var IGM = L.tileLayer('https://ludovico85.github.io/custom_XYZ_tiles/IGM_cisav/{z}/{x}/{-y}.png', {
@@ -31,23 +31,23 @@ mymap.attributionControl.addAttribution('powered by<a href="http://www.naturagis
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-}).addTo(mymap);
+});
 
 var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-});
+}).addTo(mymap);
 
-var CyclOSM = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
-	maxZoom: 20,
-	attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
 });
 
 var baseMaps = {
-	"Esri World Imagery": Esri_WorldImagery,
 //	"Estratto IGM 1:25.000": IGM,
 	"OpenStreetMap": OpenStreetMap_Mapnik,
-	"CyclOSM": CyclOSM,
+	"OpenStreetMap HOT": OpenStreetMap_HOT,
+	"Esri World Imagery": Esri_WorldImagery,
 };
 
 // loading geoJson
@@ -96,16 +96,16 @@ var punti_food = new L.geoJson(punti, {
 	pointToLayer: tipologia_style,
 	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.indicazioni+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.indiciazioni+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.indicazioni+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.indicazioni+'</td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Ottieni indicazioni stradali</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
 // load sentieri
-var fiume_volturno = new L.geoJson(fiume_volturno, {
+var percorso = new L.geoJson(percorso, {
 	weight: 6,
   lineCap: 'round',
-  color: '#0B84EE'
+  color: 'red'
 }).addTo(mymap);
-fiume_volturno.bindTooltip("Fiume Volturno",  {sticky: true});
+percorso.bindTooltip("Parade Path",  {sticky: true});
 
 
 // create overlaymaps for L.control.layers with custom icons
@@ -119,12 +119,12 @@ fiume_volturno.bindTooltip("Fiume Volturno",  {sticky: true});
 
 // create grouped overlaymaps for L.control.groupedLayers with custom icons
 var groupedOverlays = {
-	"Sentiero di Acqua e Pietra:<br>Il racconto delle comunità" : {
+	"Points of interest:" : {
 		'<img src = ico/fontane.png width="25px">Parking': punti_parking,
     '<img src = ico/sorgenti.png width="25px">Food': punti_food,
 	},
-	"Rete dei sentieri":{
-		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Sentiero':fiume_volturno,
+	"Parade Path":{
+		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Parade Path':percorso,
 	},
 };
 
