@@ -4,8 +4,8 @@ var mymap = L.map('map',
 		zoomControl:false,//custom zoom control
 		minZoom: 10,
     maxZoom: 18,
-		maxBounds: [[41.15, 13], [42.5, 15]],
-}).setView([41.55518701, 14.087], 11);
+	//maxBounds: [[41.15, 13], [42.5, 15]],
+}).setView([41.598252,14.236169], 14);
 
 // custom zoom control
 L.control.zoom({
@@ -87,18 +87,18 @@ function tipologia_style(feature, latlng) {
 	switch(feature.properties["tipologia"]){
 		case "Parking":
 			var parkingIcon = new L.ExtraMarkers.icon ({
-				icon: 'fa-faucet',
-				prefix: 'fa',
+				icon: 'fa-parking',
+				prefix: 'fas',
     		markerColor: 'cyan',
 			});
-			return L.marker(latlng, {icon: fontanaIcon});
+			return L.marker(latlng, {icon: parkingIcon});
 		case "Food":
 			var foodIcon = new L.ExtraMarkers.icon ({
-				icon: 'fa-tint',
-				prefix: 'fa',
+				icon: 'fa-utensils',
+				prefix: 'fas',
     		markerColor: 'blue-dark',
 			});
-			return L.marker(latlng, {icon: sorgenteIcon});
+			return L.marker(latlng, {icon: foodIcon});
 		};
 	};
 	
@@ -109,7 +109,7 @@ var punti_parking = new L.geoJson(punti, {
 	pointToLayer: tipologia_style,
 	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.indicazioni+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.indiciazioni+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.indicazioni+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.indicazioni+'</td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Ottieni indicazioni stradali</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
 var punti_food = new L.geoJson(punti, {
@@ -121,45 +121,6 @@ var punti_food = new L.geoJson(punti, {
 	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.indicazioni+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.indiciazioni+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.indicazioni+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.indicazioni+'</td></tr></tbody></table>')}
 }).addTo(mymap);
 
-
-// filter mancini point based on presidio descriptio
-var table = new L.geoJson(mancini, {
-	filter: function (feature, layer) {
-	return (feature.properties.descriptio === "Tabella informativa")},
-	pointToLayer: descriptio_style,
-	style: descriptio_style,
-	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Name+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.descriptio+'</td></tr><tbody></table>')}
-}).addTo(mymap);
-
-var murales = new L.geoJson(mancini, {
-	filter: function (feature, layer) {
-	return (feature.properties.descriptio === "Murales")},
-	pointToLayer: descriptio_style,
-	style: descriptio_style,
-	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Name+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.descriptio+'</td></tr><tbody></table>')}
-}).addTo(mymap);
-
-var memoria = new L.geoJson(mancini, {
-	filter: function (feature, layer) {
-	return (feature.properties.descriptio === "Fontana della memoria")},
-	pointToLayer: descriptio_style,
-	style: descriptio_style,
-	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Name+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.descriptio+'</td></tr><tbody></table>')}
-}).addTo(mymap);
-
-var infopoint = new L.geoJson(mancini, {
-	filter: function (feature, layer) {
-	return (feature.properties.descriptio === "Punti d'interesse")},
-	pointToLayer: descriptio_style,
-	style: descriptio_style,
-	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Name+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.descriptio+'</td></tr><tbody></table>')}
-});
-
-
 // load sentieri
 var fiume_volturno = new L.geoJson(fiume_volturno, {
 	weight: 6,
@@ -168,13 +129,6 @@ var fiume_volturno = new L.geoJson(fiume_volturno, {
 }).addTo(mymap);
 fiume_volturno.bindTooltip("Fiume Volturno",  {sticky: true});
 
-var dorsale_sentiero = new L.geoJson(dorsale_sentiero, {
-	weight: 5,
-	color: 'red',
-	dashArray: '5, 10',
-	onEachFeature: function(feature, layer){
-        layer.bindTooltip(feature.properties.Tratto, {sticky: true})}
-}).addTo(mymap);
 
 // create overlaymaps for L.control.layers with custom icons
 //var overlayMaps = {
@@ -188,20 +142,11 @@ var dorsale_sentiero = new L.geoJson(dorsale_sentiero, {
 // create grouped overlaymaps for L.control.groupedLayers with custom icons
 var groupedOverlays = {
 	"Sentiero di Acqua e Pietra:<br>Il racconto delle comunità" : {
-		'<img src = ico/fontane.png width="25px">Fontane': punti_parking,
-    '<img src = ico/sorgenti.png width="25px">Sorgenti': punti_food,
-	},
-	"Sentiero di Acqua e Pietra:<br>Camminare nell’Acqua e nella Pietra":{
-		'<img src = ico/table.png width="25px">Tabella informativa': table,
-    '<img src = ico/murales.png width="25px">Murales': murales,
-		'<img src = ico/memoria.png width="25px">Fontana della memoria':memoria,
-	},
-	"Sentiero di Acqua e Pietra:<br>L'acquedotto romano tra passato e futuro":{
-		'<img src = ico/poi.png width="25px">POI Acquedotto romano di Venafro':poi_acquedotto,
+		'<img src = ico/fontane.png width="25px">Parking': punti_parking,
+    '<img src = ico/sorgenti.png width="25px">Food': punti_food,
 	},
 	"Rete dei sentieri":{
-		'<i class="fas fa-wave-square fa-2x" style="color:#0B84EE"></i> Fiume Volturno':fiume_volturno,
-		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Sentiero':dorsale_sentiero,
+		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Sentiero':fiume_volturno,
 	},
 };
 
@@ -217,18 +162,3 @@ console.log(window.screen.width)
 
 //L.control.layers(baseMaps, overlayMaps, {collapsed: true}).addTo(mymap);
 L.control.groupedLayers(baseMaps, groupedOverlays, {collapsed: isCollapsed}).addTo(mymap);
-
-// sidebar
-// create the sidebar instance and add it to the map
-var sidebar = L.control.sidebar({container:'sidebar'}).addTo(mymap);
-// add panels dynamically to the sidebar
-
-// be notified when a panel is opened
-sidebar.on('content', function (ev) {
-switch (ev.id) {
-case 'autopan':
-sidebar.options.autopan = true;
-break;
-default: sidebar.options.autopan = false;
-}
-});
