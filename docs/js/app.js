@@ -50,28 +50,6 @@ var baseMaps = {
 	"CyclOSM": CyclOSM,
 };
 
-// geolocation
-if(!navigator.geolocation) {
-  console.log("Your browser doesn't support geolocation feature!")
-   } else {
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(getPosition)
-        }, 5000);
-    }
-
-
-
-function getPosition(position){
-       console.log(position)
-        var lat = position.coords.latitude
-        var long = position.coords.longitude
-        var accuracy = position.coords.accuracy
-		
-		var marker = L.marker([lat, long]).addTo(mymap)
-		};
-
-
-
 // loading geoJson
 // custom icon for poi acquedotto
 var custom_icon = new L.ExtraMarkers.icon ({
@@ -162,3 +140,13 @@ console.log(window.screen.width)
 
 //L.control.layers(baseMaps, overlayMaps, {collapsed: true}).addTo(mymap);
 L.control.groupedLayers(baseMaps, groupedOverlays, {collapsed: isCollapsed}).addTo(mymap);
+
+// geolocator
+var lc = L.control
+  .locate({
+    position: "topright",
+    strings: {
+      title: "Show me where I am, yo!"
+    }
+  })
+  .addTo(mymap);
