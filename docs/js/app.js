@@ -83,121 +83,42 @@ var custom_icon = new L.ExtraMarkers.icon ({
 
 // function for categorized symbols
 // presidio
-function presidio_style(feature, latlng) {
-	switch(feature.properties["presidio"]){
-		case "Fontana":
-			var fontanaIcon = new L.ExtraMarkers.icon ({
+function tipologia_style(feature, latlng) {
+	switch(feature.properties["tipologia"]){
+		case "Parking":
+			var parkingIcon = new L.ExtraMarkers.icon ({
 				icon: 'fa-faucet',
 				prefix: 'fa',
     		markerColor: 'cyan',
 			});
 			return L.marker(latlng, {icon: fontanaIcon});
-		case "Sorgente":
-			var sorgenteIcon = new L.ExtraMarkers.icon ({
+		case "Food":
+			var foodIcon = new L.ExtraMarkers.icon ({
 				icon: 'fa-tint',
 				prefix: 'fa',
     		markerColor: 'blue-dark',
 			});
 			return L.marker(latlng, {icon: sorgenteIcon});
-		case "Opere idrauliche":
-			var opereIcon = new L.ExtraMarkers.icon ({
-				icon: 'fa-tint-slash',
-				prefix: 'fa',
-    			markerColor: 'purple'
-			});
-			return L.marker(latlng, {icon: opereIcon});
-		case "Corso d'acqua":
-			var corsoIcon = new L.ExtraMarkers.icon ({
-				icon: 'fa-stream',
-				iconColor: '#1e91d3',
-				prefix: 'fa',
-    		markerColor: 'white',
-			});
-			return L.marker(latlng, {icon: corsoIcon});
 		};
 	};
-	// function for categorized symbols
-	// descriptio
-	function descriptio_style(feature, latlng) {
-		switch(feature.properties["descriptio"]){
-			case "Tabella informativa":
-				var tabellaIcon = new L.ExtraMarkers.icon ({
-					icon: 'fa-info',
-					prefix: 'fas',
-	    		markerColor: 'green',
-					shape: 'square',
-				});
-				return L.marker(latlng, {icon: tabellaIcon});
-			case "Punti d'interesse":
-				var poiIcon = new L.ExtraMarkers.icon ({
-					icon: 'fa-map-marker-alt',
-					prefix: 'fas',
-	    		markerColor: 'blue-dark',
-					shape: 'square',
-				});
-				return L.marker(latlng, {icon: poiIcon});
-			case "Murales":
-				var muralesIcon = new L.ExtraMarkers.icon ({
-					icon: 'fa-dragon',
-					prefix: 'fas',
-	    		markerColor: 'green-light',
-					shape: 'square',
-				});
-				return L.marker(latlng, {icon: muralesIcon});
-			case "Fontana della memoria":
-				var memoriaIcon = new L.ExtraMarkers.icon ({
-					icon: 'fa-comment-dots',
-					prefix: 'fas',
-	    		markerColor: 'green-dark',
-					shape: 'square',
-				});
-				return L.marker(latlng, {icon: memoriaIcon});
-			};
-		};
-
-// loading poi_acquedotto geoJson
-var poi_acquedotto = new L.geoJson(poi_acquedotto, {
-	pointToLayer: function (feature, layer) {
-    return L.marker(layer, {icon: custom_icon});},
+	
+// filter  point based on tipologia attribute
+var punti_parking = new L.geoJson(punti, {
+	filter: function (feature, layer) {
+	return (feature.properties.tipologia === "Parking")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Località</td><td>'+feature.properties.Localita+'</td></tr><tr><td>Comune</td><td>'+feature.properties.Comune+'</td></tr><tr><td colspan="2"><img src=' + feature.properties.Foto_low +' " width=100%/></td></tr><tr><td colspan = "2">'+feature.properties.Credits+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.Descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.href+'" class="btn btn-primary btn-sm" role="button" target="_blank">Mostra a schermo intero</a></td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.indicazioni+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.indiciazioni+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.indicazioni+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.indicazioni+'</td></tr></tbody></table>')}
 }).addTo(mymap);
 
-// filter cisav point based on presidio attribute
-var cisav_sorgenti = new L.geoJson(cisav_acque, {
+var punti_food = new L.geoJson(punti, {
 	filter: function (feature, layer) {
-	return (feature.properties.presidio === "Sorgente")},
-	pointToLayer: presidio_style,
-	style: presidio_style,
+	return (feature.properties.tipologia === "Food")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.Comune+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.presidio+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.Quota+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.Descrizione+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.Fonte+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.link_button+'</td></tr></tbody></table>')}
-}).addTo(mymap);
-
-var cisav_fontane = new L.geoJson(cisav_acque, {
-	filter: function (feature, layer) {
-	return (feature.properties.presidio === "Fontana")},
-	pointToLayer: presidio_style,
-	style: presidio_style,
-	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.Comune+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.presidio+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.Quota+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.Descrizione+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.Fonte+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.link_button+'</td></tr></tbody></table>')}
-}).addTo(mymap);
-
-var cisav_opere_idrauliche = new L.geoJson(cisav_acque, {
-	filter: function (feature, layer) {
-	return (feature.properties.presidio === "Opere idrauliche")},
-	pointToLayer: presidio_style,
-	style: presidio_style,
-	onEachFeature: function (feature, layer) {
-		layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.Comune+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.presidio+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.Quota+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.Descrizione+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.Fonte+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.link_button+'</td></tr></tbody></table>')}
-}).addTo(mymap);
-
-var cisav_corso_acqua = new L.geoJson(cisav_acque, {
-	filter: function (feature, layer) {
-	return (feature.properties.presidio === "Corso d'acqua")},
-	pointToLayer: presidio_style,
-	style: presidio_style,
-	onEachFeature: function (feature, layer) {
-		layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.Denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.Comune+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.presidio+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.Quota+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.Descrizione+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.Fonte+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.link_button+'</td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><td>Comune</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Tipo di presidio</td><td>'+feature.properties.indicazioni+'</td></tr></tr><tr><td>Quota m s.l.m.</td><td>'+feature.properties.indicazioni+'</td></tr><tr><td>Descrizione</td><td>'+feature.properties.indiciazioni+'</td></tr><tr><td>Fonte dati</td><td>'+feature.properties.indicazioni+'</td></tr><tr><tr class="text-center"><td colspan="2">'+feature.properties.indicazioni+'</td></tr></tbody></table>')}
 }).addTo(mymap);
 
 
@@ -267,10 +188,8 @@ var dorsale_sentiero = new L.geoJson(dorsale_sentiero, {
 // create grouped overlaymaps for L.control.groupedLayers with custom icons
 var groupedOverlays = {
 	"Sentiero di Acqua e Pietra:<br>Il racconto delle comunità" : {
-		'<img src = ico/fontane.png width="25px">Fontane': cisav_fontane,
-    '<img src = ico/sorgenti.png width="25px">Sorgenti': cisav_sorgenti,
-		'<img src = ico/corso_acqua.png width="25px">Corsi d&#8217acqua':cisav_corso_acqua,
-		'<img src = ico/opere_idrauliche.png width="25px">Opere idrauliche':cisav_opere_idrauliche,
+		'<img src = ico/fontane.png width="25px">Fontane': punti_parking,
+    '<img src = ico/sorgenti.png width="25px">Sorgenti': punti_food,
 	},
 	"Sentiero di Acqua e Pietra:<br>Camminare nell’Acqua e nella Pietra":{
 		'<img src = ico/table.png width="25px">Tabella informativa': table,
