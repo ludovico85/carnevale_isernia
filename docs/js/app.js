@@ -1,8 +1,8 @@
 // intial map settings
 var mymap = L.map('map',
 	{
-		zoomControl:false,//custom zoom control
-		minZoom: 10,
+	zoomControl:false,//custom zoom control
+	minZoom: 10,
     maxZoom: 18,
 	//maxBounds: [[41.15, 13], [42.5, 15]],
 }).setView([41.594574,14.231342], 16);
