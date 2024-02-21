@@ -196,7 +196,7 @@ var groupedOverlays = {
 	'<img src = ico/parcheggio.png width="25px">Parcheggio/Parking': punti_parking,
     '<img src = ico/food.png width="25px">Food Area': punti_food,
 	'<img src = ico/ristorante.png width="25px">Ristoranti/Restaurants': punti_ristorante,
-	'<img src = ico/varie.png width="25px">Varie/various (bakery, dairy, cafè, wine bar, etc.': punti_varie,
+	'<img src = ico/varie.png width="25px">Varie/various (bakery, dairy, cafè, wine bar, etc.)': punti_varie,
 	'<img src = ico/culturali.png width="25px">Siti culturali/Cultural sites': punti_culturali,
 	},
 	"Parade Path":{
