@@ -173,20 +173,20 @@ var percorso = new L.geoJson(percorso, {
 percorso.bindTooltip("Parade Path",  {sticky: true});
 
 // area camper personalizzata
-var camper = L.polygon([
-      [41.6038896,14.2455197],
-      [41.6048342,14.2467410],
-      [41.6045033,14.2471622],
-	  [41.6036188,14.2460010]
-    ]).addTo(mymap)
-
-camper.setStyle({
-      fillColor: 'green',
-      fillOpacity: 0.5,
-      color: '#36c146',
-      weight: 2
-    });
-camper.bindTooltip("Camper area",  {sticky: true});
+//var camper = L.polygon([
+//      [41.6038896,14.2455197],
+//      [41.6048342,14.2467410],
+//      [41.6045033,14.2471622],
+//	  [41.6036188,14.2460010]
+//    ]).addTo(mymap)
+//
+//camper.setStyle({
+//      fillColor: 'green',
+//      fillOpacity: 0.5,
+//      color: '#36c146',
+//      weight: 2
+//    });
+//camper.bindTooltip("Camper area",  {sticky: true});
 
 
 
