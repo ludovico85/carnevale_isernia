@@ -100,8 +100,8 @@ function tipologia_style(feature, latlng) {
 			return L.marker(latlng, {icon: culturaliIcon});
 		case "parata":
 			var parataIcon = new L.icon ({
-				iconUrl: '/ico/parade_icon.png',
-				iconSize: [38, 38]
+				iconUrl: 'https://github.com/ludovico85/carnevale_isernia/blob/main/docs/ico/parade_ico.png?raw=true',
+				iconSize: [30, 50]
 			});
 			return L.marker(latlng, {icon: parataIcon});
 		};
@@ -201,6 +201,7 @@ var groupedOverlays = {
 	},
 	"Parade Path":{
 		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Parade Path':percorso,
+		'<img src = ico/parade_ico.png width="25px"> Starting/arrival points': punti_parata,
 	},
 };
 
