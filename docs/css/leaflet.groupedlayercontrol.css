@@ -2,6 +2,8 @@
   font-weight: bold;
   margin-bottom: .2em;
   margin-left: 3px;
+  font-family: "Open Sans",Verdana,Geneva,sans-serif;
+  color: #333
 }
 
 .leaflet-control-layers-group {
@@ -11,4 +13,10 @@
 .leaflet-control-layers-scrollbar {
   overflow-y: scroll;
   padding-right: 10px;
+}
+
+
+.leaflet-control-layers-base {
+  font-family: "Open Sans",Verdana,Geneva,sans-serif;
+  color: #333
 }

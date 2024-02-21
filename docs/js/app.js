@@ -3,9 +3,9 @@ var mymap = L.map('map',
 	{
 	zoomControl:false,//custom zoom control
 	minZoom: 10,
-    maxZoom: 18,
+    maxZoom: 19,
 	//maxBounds: [[41.15, 13], [42.5, 15]],
-}).setView([41.594574,14.231342], 16);
+}).setView([41.594574,14.231342], 14);
 
 // custom zoom control
 L.control.zoom({
@@ -63,16 +63,30 @@ var custom_icon = new L.ExtraMarkers.icon ({
 // presidio
 function tipologia_style(feature, latlng) {
 	switch(feature.properties["tipologia"]){
-		case "Parking":
+		case "Parcheggio":
 			var parkingIcon = new L.ExtraMarkers.icon ({
 				icon: 'fa-parking',
 				prefix: 'fas',
     		markerColor: 'cyan',
 			});
 			return L.marker(latlng, {icon: parkingIcon});
+		case "Ristorante":
+			var parkingIcon = new L.ExtraMarkers.icon ({
+				icon: 'fa-utensils',
+				prefix: 'fas',
+    		markerColor: 'red',
+			});
+			return L.marker(latlng, {icon: parkingIcon});
+		case "varie":
+			var parkingIcon = new L.ExtraMarkers.icon ({
+				icon: 'fa-pizza-slice',
+				prefix: 'fas',
+    		markerColor: 'orange',
+			});
+			return L.marker(latlng, {icon: parkingIcon});
 		case "Food":
 			var foodIcon = new L.ExtraMarkers.icon ({
-				icon: 'fa-utensils',
+				icon: 'fa-hamburger',
 				prefix: 'fas',
     		markerColor: 'blue-dark',
 			});
@@ -83,11 +97,29 @@ function tipologia_style(feature, latlng) {
 // filter  point based on tipologia attribute
 var punti_parking = new L.geoJson(punti, {
 	filter: function (feature, layer) {
-	return (feature.properties.tipologia === "Parking")},
+	return (feature.properties.tipologia === "Parcheggio")},
 	pointToLayer: tipologia_style,
 	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Ottieni indicazioni stradali</a></td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
+}).addTo(mymap);
+
+var punti_ristorante = new L.geoJson(punti, {
+	filter: function (feature, layer) {
+	return (feature.properties.tipologia === "Ristorante")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
+	onEachFeature: function (feature, layer) {
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
+}).addTo(mymap);
+
+var punti_ristorante = new L.geoJson(punti, {
+	filter: function (feature, layer) {
+	return (feature.properties.tipologia === "varie")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
+	onEachFeature: function (feature, layer) {
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
 var punti_food = new L.geoJson(punti, {
@@ -96,7 +128,7 @@ var punti_food = new L.geoJson(punti, {
 	pointToLayer: tipologia_style,
 	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>Denominazione</td><td>'+feature.properties.denominazione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Ottieni indicazioni stradali</a></td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
 // load sentieri
@@ -120,8 +152,9 @@ percorso.bindTooltip("Parade Path",  {sticky: true});
 // create grouped overlaymaps for L.control.groupedLayers with custom icons
 var groupedOverlays = {
 	"Points of interest:" : {
-		'<img src = ico/fontane.png width="25px">Parking': punti_parking,
-    '<img src = ico/sorgenti.png width="25px">Food': punti_food,
+	'<img src = ico/fontane.png width="25px">Parcheggio/Parking': punti_parking,
+    '<img src = ico/sorgenti.png width="25px">Food Area': punti_food,
+	'<img src = ico/sorgenti.png width="25px">Ristoranti/Restaurants': punti_food,
 	},
 	"Parade Path":{
 		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Parade Path':percorso,
