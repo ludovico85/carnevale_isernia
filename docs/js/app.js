@@ -88,11 +88,26 @@ function tipologia_style(feature, latlng) {
 			var foodIcon = new L.ExtraMarkers.icon ({
 				icon: 'fa-hamburger',
 				prefix: 'fas',
-    		markerColor: 'blue-dark',
+    		markerColor: 'green',
 			});
 			return L.marker(latlng, {icon: foodIcon});
+		case "culturali":
+			var culturaliIcon = new L.ExtraMarkers.icon ({
+				icon: 'fa-landmark',
+				prefix: 'fas',
+    		markerColor: 'purple',
+			});
+			return L.marker(latlng, {icon: culturaliIcon});
+		case "parata":
+			var parataIcon = new L.icon ({
+				iconUrl: '/ico/parade_icon.png',
+				iconSize: [38, 38]
+			});
+			return L.marker(latlng, {icon: parataIcon});
 		};
+		
 	};
+
 	
 // filter  point based on tipologia attribute
 var punti_parking = new L.geoJson(punti, {
@@ -113,7 +128,7 @@ var punti_ristorante = new L.geoJson(punti, {
 	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
-var punti_ristorante = new L.geoJson(punti, {
+var punti_varie = new L.geoJson(punti, {
 	filter: function (feature, layer) {
 	return (feature.properties.tipologia === "varie")},
 	pointToLayer: tipologia_style,
@@ -131,7 +146,25 @@ var punti_food = new L.geoJson(punti, {
 	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
-// load sentieri
+var punti_culturali = new L.geoJson(punti, {
+	filter: function (feature, layer) {
+	return (feature.properties.tipologia === "culturali")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
+	onEachFeature: function (feature, layer) {
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
+}).addTo(mymap);
+
+var punti_parata = new L.geoJson(punti, {
+	filter: function (feature, layer) {
+	return (feature.properties.tipologia === "parata")},
+	pointToLayer: tipologia_style,
+	style: tipologia_style,
+	onEachFeature: function (feature, layer) {
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
+}).addTo(mymap);
+
+// load percorso
 var percorso = new L.geoJson(percorso, {
 	weight: 6,
   lineCap: 'round',
@@ -139,22 +172,32 @@ var percorso = new L.geoJson(percorso, {
 }).addTo(mymap);
 percorso.bindTooltip("Parade Path",  {sticky: true});
 
+// area camper personalizzata
+var camper = L.polygon([
+      [41.6038896,14.2455197],
+      [41.6048342,14.2467410],
+      [41.6045033,14.2471622],
+	  [41.6036188,14.2460010]
+    ]).addTo(mymap)
 
-// create overlaymaps for L.control.layers with custom icons
-//var overlayMaps = {
-//    '<img src = ico/fontane.png width="25px">Fontane': cisav_fontane,
-//    '<img src = ico/sorgenti.png width="25px">Sorgenti': cisav_sorgenti,
-//		'<img src = ico/corso_acqua.png width="25px">Corsi d&#8217acqua':cisav_corso_acqua,
-//		'<img src = ico/opere_idrauliche.png width="25px">Opere idrauliche':cisav_opere_idrauliche,
-//		'<img src = ico/poi.png width="25px">POI Acquedotto romano di Venafro':poi_acquedotto,
-//};
+camper.setStyle({
+      fillColor: 'green',
+      fillOpacity: 0.5,
+      color: '#36c146',
+      weight: 2
+    });
+camper.bindTooltip("Camper area",  {sticky: true});
+
+
 
 // create grouped overlaymaps for L.control.groupedLayers with custom icons
 var groupedOverlays = {
 	"Points of interest:" : {
-	'<img src = ico/fontane.png width="25px">Parcheggio/Parking': punti_parking,
-    '<img src = ico/sorgenti.png width="25px">Food Area': punti_food,
-	'<img src = ico/sorgenti.png width="25px">Ristoranti/Restaurants': punti_food,
+	'<img src = ico/parcheggio.png width="25px">Parcheggio/Parking': punti_parking,
+    '<img src = ico/food.png width="25px">Food Area': punti_food,
+	'<img src = ico/ristorante.png width="25px">Ristoranti/Restaurants': punti_ristorante,
+	'<img src = ico/varie.png width="25px">Varie/various (bakery, dairy, cafè, wine bar, etc.': punti_varie,
+	'<img src = ico/culturali.png width="25px">Siti culturali/Cultural sites': punti_culturali,
 	},
 	"Parade Path":{
 		'<i class="fas fa-wave-square fa-2x" style="color:red"></i> Parade Path':percorso,

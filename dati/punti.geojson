@@ -1,4 +1,3 @@
-var punti = 
 {
 "type": "FeatureCollection",
 "name": "punti",
@@ -46,6 +45,6 @@ var punti =
 { "type": "Feature", "properties": { "fid": 41, "tipologia": "culturali", "indicazioni": "https://maps.app.goo.gl/pgaXZoedogvaGGV7A", "denominazione": "Borgo del Merletto", "descrizione": "Siti culturali/Cultural site" }, "geometry": { "type": "Point", "coordinates": [ 14.229038675543345, 41.591350675980948 ] } },
 { "type": "Feature", "properties": { "fid": 42, "tipologia": "culturali", "indicazioni": "https://maps.app.goo.gl/L63GGoEobjoVhsGw8", "denominazione": "Auditorium Unitò d'Italia", "descrizione": "Siti culturali/Cultural site" }, "geometry": { "type": "Point", "coordinates": [ 14.241825402002267, 41.596804915695834 ] } },
 { "type": "Feature", "properties": { "fid": 43, "tipologia": "parata", "indicazioni": "https://maps.app.goo.gl/VCnbvpeXUv3nRziC6", "denominazione": "Partenza Corteo/Parade strating point", "descrizione": "" }, "geometry": { "type": "Point", "coordinates": [ 14.237639283325016, 41.599707973204652 ] } },
-{ "type": "Feature", "properties": { "fid": 44, "tipologia": "parata", "indicazioni": "https://maps.app.goo.gl/ndfnYjR2jLfMGPB68", "denominazione": "Arrivo corteo/Parade arrival", "descrizione": "" }, "geometry": { "type": "Point", "coordinates": [ 14.226653542125142, 41.590291086399453 ] } }
+{ "type": "Feature", "properties": { "fid": 44, "tipologia": "parata", "indicazioni": null, "denominazione": "Arrivo corteo/Parade arrival", "descrizione": "https://maps.app.goo.gl/ndfnYjR2jLfMGPB68" }, "geometry": { "type": "Point", "coordinates": [ 14.226653542125142, 41.590291086399453 ] } }
 ]
 }
