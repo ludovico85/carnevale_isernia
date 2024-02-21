@@ -161,7 +161,7 @@ var punti_parata = new L.geoJson(punti, {
 	pointToLayer: tipologia_style,
 	style: tipologia_style,
 	onEachFeature: function (feature, layer) {
-	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><td style="font-size: 10px; font-weight: bold">'+feature.properties.descrizione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
+	layer.bindPopup('<table class="table"><tbody><tr><td>'+feature.properties.denominazione+'</td></tr><tr><tr class="text-center"><td colspan="2"><a href="'+feature.properties.indicazioni+'" class="btn btn-primary btn-sm" role="button" target="_blank">Indicazioni/Directions</a></td></tr></tbody></table>')}
 }).addTo(mymap);
 
 // load percorso
