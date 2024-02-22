@@ -59,6 +59,16 @@ html, body {
     word-wrap: break-word;
 }
 
+/*/
+.leaflet-control-layers-expanded {
+            display: block !important;
+        }
+        @media (max-width: 600px) {
+            .leaflet-control-layers-expanded {
+                display: none !important;
+            }
+ }
+ /*/
 
  /*/ custom sidebar /*/
 .leaflet-sidebar-tabs {
