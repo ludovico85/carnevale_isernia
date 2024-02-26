@@ -22,12 +22,6 @@ mymap.addControl(new L.Control.Fullscreen({
 // custom attribution
 mymap.attributionControl.addAttribution('Realizzato da <a style="color:#0096FF;" href="https://www.linkedin.com/in/ludovicofrate/" target="_blank"> Ludovico Frate</a>');
 
-// loading some basemaps
-//var IGM = L.tileLayer('https://ludovico85.github.io/custom_XYZ_tiles/IGM_cisav/{z}/{x}/{-y}.png', {
-//    tms: true,
-//	opacity: 1,
-//	attribution: '<a href="https://github.com/ludovico85/custom_XYZ_tiles">IGM</a>'
-//});
 
 var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -44,21 +38,12 @@ var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{
 });
 
 var baseMaps = {
-//	"Estratto IGM 1:25.000": IGM,
 	"OpenStreetMap": OpenStreetMap_Mapnik,
 	"OpenStreetMap HOT": OpenStreetMap_HOT,
 	"Esri World Imagery": Esri_WorldImagery,
 };
 
 // loading geoJson
-// custom icon for poi acquedotto
-var custom_icon = new L.ExtraMarkers.icon ({
-	icon: 'fa-tint',
-	prefix: 'fa',
-	shape: 'circle',
-	markerColor: 'orange-dark'
-});
-
 // function for categorized symbols
 // presidio
 function tipologia_style(feature, latlng) {
@@ -199,7 +184,7 @@ console.log(isCollapsed)
 console.log(window.screen.width)
 
 //L.control.layers(baseMaps, overlayMaps, {collapsed: true}).addTo(mymap);
-L.control.groupedLayers(baseMaps, groupedOverlays, {collapsed: true}).addTo(mymap);
+L.control.groupedLayers(baseMaps, groupedOverlays, {collapsed: isCollapsed}).addTo(mymap);
 
 // geolocator
 var lc = L.control
