@@ -174,7 +174,7 @@ var groupedOverlays = {
 };
 
 // function for controlling the behaviour of the control.layers
-if(window.screen.width <=767) {
+if(window.screen.width <=1280) {
 	var isCollapsed = true;
 } else {
 	var isCollapsed = false;
